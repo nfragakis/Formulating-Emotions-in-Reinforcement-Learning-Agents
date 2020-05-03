@@ -5,7 +5,13 @@
 ## Goals
 
 - Train Agent in physics sim walking environment
-- Formulate emotions based off core RL features 
+- Write run.py from scratch for cmd line sims
+- Build Simulation Folder Structures
+- Render video of sims 
+- Setup File (handle reqs)
+- README.md for running simulations
+- Formulate emotions based off core RL features in Algo files
+
 ### Emotion Types
 - Joy (tied to Reward Function and Expectation (policy)
     - Joy = (Reward from the environment + our expected value of that
