@@ -3,16 +3,16 @@
 ## [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
 ## [Markdown Cheat-Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 ## TODO 
-
-- Train Agent in physics sim walking environment
-- Write run.py from scratch for cmd line sims
-- Build Simulation Folder Structures
-- Render video of sims 
-- Setup File (handle reqs)
-- README.md for running simulations
-- Formulate emotions based off core RL features in Algo files
-    - reward function (incorporate emotions?)
-    - emotion functions (from types above)
+- Build Run.py to run simulations 
+    - Build sim/experiment folder structs (video, metrics, etc)
+    - cmd line argument handling
+- Build Model 
+    - Formulate emotions based off core RL features in Algo files
+        - reward function (incorporate emotions?)
+        - emotion functions (from types above)
+- README for running sims
+- Content Theory / webpage README
+- Setup instructions to run in Colab
 
 
 ### Emotion Types
