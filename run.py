@@ -18,6 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('--exp_name', type=str, default='ddpg')
     args = parser.parse_args()
 
+    # Build experiment folder structure
     logger_kwargs = setup_logger_kwargs(args.exp_name, args.seed)
 
     # Launch ddpg Algo
@@ -25,3 +26,5 @@ if __name__ == '__main__':
          ac_kwargs=dict(hidden_sizes=[args.hid]*args.l), 
          gamma=args.gamma, seed=args.seed, epochs=args.epochs,
          logger_kwargs=logger_kwargs)
+
+   

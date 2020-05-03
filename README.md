@@ -3,15 +3,17 @@
 ## [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
 ## [Markdown Cheat-Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 ## TODO 
-- Build Run.py to run simulations 
-    - Build sim/experiment folder structs (video, metrics, etc)
-    - cmd line argument handling
-- Build Model 
+- Add Sim Video Recording functionality
+    - See Deep-Reinforcement-Learning Ch.6 wrappers.py
+- Add Emotion Functions to Model 
     - Formulate emotions based off core RL features in Algo files
         - reward function (incorporate emotions?)
         - emotion functions (from types above)
 - README for running sims
-- Content Theory / webpage README
+- Content Theory / Main webpage README
+    - Write Wiki on Reinforcement Learning / DDPG Algo 
+    - Connect concepts to content theory 
+    - Explain SIM w/ Video Examples
 - Setup instructions to run in Colab
 
 

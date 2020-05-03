@@ -228,8 +228,10 @@ def ddpg(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
         a += noise_scale * np.random.randn(act_dim)
         return np.clip(a, -act_limit, act_limit)
 
-    def test_agent():
+    def test_agent(render=False):
         for j in range(num_test_episodes):
+            if render:
+                test_env.render()
             o, d, ep_ret, ep_len = test_env.reset(), False, 0, 0
             while not(d or (ep_len == max_ep_len)):
                 # Take deterministic actions at test time (noise_scale=0)
@@ -290,11 +292,11 @@ def ddpg(env_fn, actor_critic=core.MLPActorCritic, ac_kwargs=dict(), seed=0,
             if (epoch % save_freq == 0) or (epoch == epochs):
                 logger.save_state({'env': env}, None)
 
-            if epoch % 5 == 0:
-                env.render()
-
             # Test the performance of the deterministic version of the agent.
-            test_agent()
+            if epoch % 50 == 0:
+                test_agent(render=True)
+            else:
+                test_agent()
 
             # Log info about epoch
             logger.log_tabular('Epoch', epoch)
