@@ -2,7 +2,7 @@
 
 ## [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
 ## [Markdown Cheat-Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-## Goals
+## TODO 
 
 - Train Agent in physics sim walking environment
 - Write run.py from scratch for cmd line sims
@@ -11,6 +11,9 @@
 - Setup File (handle reqs)
 - README.md for running simulations
 - Formulate emotions based off core RL features in Algo files
+    - reward function (incorporate emotions?)
+    - emotion functions (from types above)
+
 
 ### Emotion Types
 - Joy (tied to Reward Function and Expectation (policy)
@@ -43,13 +46,6 @@
     - (mean of historic errors for specific Q(S,A) + Most recent error 
     for that Q(S,A) ) / 2
 
-
-## TODO
-- Get OpenAI Gym Simulation Running (Walker2d, Mujoco)
-    - Run.py file
-    - model (DDPG w/ Memory Buffer)
-    - reward function (incorporate emotions?)
-    - emotion functions (from types above)
 - Content Theory
     - [Read Somatic Marker Paper](https://www.brainmaster.com/software/pubs/brain/Dunn%20somatic_marker_hypothesis.pdf)
     - [Somatic Wiki](https://en.wikipedia.org/wiki/Somatic_marker_hypothesis)
@@ -63,5 +59,6 @@
     - [Joy, Destress, Hope, Fear in RL](https://dl.acm.org/doi/10.5555/2615731.2616089O)
 
     
+
 
 
