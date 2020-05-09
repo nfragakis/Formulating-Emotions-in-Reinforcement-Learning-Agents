@@ -28,6 +28,8 @@ if __name__ == '__main__':
     parser.add_argument('--num_test_episodes', type=int, default=15)
     parser.add_argument('--max_ep_len', type=int, default=1000)
     parser.add_argument('--polyak', type=float, default=0.995)
+    parser.add_argument('--start_steps', type=int, default=10000)
+    parser.add_argument('--act_noise', type=float, default=0.1)
     args = parser.parse_args()
 
     # Build experiment folder structure
@@ -135,6 +137,34 @@ if __name__ == '__main__':
 
     # MAIN TRAINING LOOP
     for t in range(total_steps):
+
+        # sample random actions until start_steps 
+        # when memory buffer is built up 
+        if t > args.start_steps:
+            a = get_action(o, args.act_noise)
+        else:
+            a = env.action_space.sample()
+
+        # Step the environment 
+        o2, r, d, _ = env.step(a)
+        ep_ret += r 
+        ep_len += 1 
+
+        # Ignore the "done" signal if it comes from hitting the time
+        # horizon (that is, when it's an artificial terminal signal
+        # that isn't based on the agent's state)
+        d = False if ep_len==args.max_ep_len else d
+
+        # Store experience in replay buffer 
+        replay_buffer.store(o, a, r, o2, d)
+
+        # Update most recent observation of state 
+        o = o2 
+
+        # End of trajectory handling 
+        if d or (ep_len == args.max_ep_len):
+            logger.store(EpRet=ep_ret, EpLen=ep_len)
+            o, ep_ret, ep_len = env.reset(), 0, 0
 
 
 
