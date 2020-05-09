@@ -15,21 +15,25 @@ DEFAULT_ENV_NAME =  'BipedalWalker-v3'
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--env', type=str, default=DEFAULT_ENV_NAME)
+    parser.add_argument('--exp_name', type=str, default='ddpg')
     parser.add_argument('--hid', type=int, default=256)
     parser.add_argument('--l', type=int, default=2)
     parser.add_argument('--gamma', type=float, default=0.99)
     parser.add_argument('--steps_per_epoch', type=int, default=4000)
     parser.add_argument('--epochs', type=int, default=50)
+    parser.add_argument('--batch_size', type=int, default=100)
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--pi_lr', type=float, default=1e-3)
     parser.add_argument('--q_lr', type=float, default=1e-3)
-    parser.add_argument('--exp_name', type=str, default='ddpg')
+    parser.add_argument('--act_noise', type=float, default=0.1)
     parser.add_argument("--record", "-r", help="Directory to store video recording")
     parser.add_argument('--num_test_episodes', type=int, default=15)
     parser.add_argument('--max_ep_len', type=int, default=1000)
     parser.add_argument('--polyak', type=float, default=0.995)
     parser.add_argument('--start_steps', type=int, default=10000)
-    parser.add_argument('--act_noise', type=float, default=0.1)
+    parser.add_argument('--update_after', type=int, default=1000)
+    parser.add_argument('--save_freq', type=int, default=1)
+    parser.add_argument('--update_every', type=int, default=50)
     args = parser.parse_args()
 
     # Build experiment folder structure
@@ -166,5 +170,37 @@ if __name__ == '__main__':
             logger.store(EpRet=ep_ret, EpLen=ep_len)
             o, ep_ret, ep_len = env.reset(), 0, 0
 
+        # Update Neural Net Parameters 
+        if (t >= args.update_after) and (t % args.update_every == 0):
+            for _ in range(args.update_every):
+                # pull random batch of experiences from memory buffer
+                batch = replay_buffer.sample_batch(args.batch_size)
+                update(batch)
 
+        # End of Epoch handling
+        if (t+1) % args.steps_per_epoch == 0:
+            epoch = (t+1) // args.steps_per_epoch 
+
+            # Save Model
+            if (epoch % args.save_freq == 0) or (epoch == args.epochs):
+                logger.save_state({'env':env}, None)
+
+            # Test the performance of the deterministic version of the agent.
+            if epoch % 50 == 0:
+                test_agent(render=True)
+            else:
+                test_agent()
+
+            # Log info about epoch
+            logger.log_tabular('Epoch', epoch)
+            logger.log_tabular('EpRet', with_min_and_max=True)
+            logger.log_tabular('TestEpRet', with_min_and_max=True)
+            logger.log_tabular('EpLen', average_only=True)
+            logger.log_tabular('TestEpLen', average_only=True)
+            logger.log_tabular('TotalEnvInteracts', t)
+            logger.log_tabular('QVals', with_min_and_max=True)
+            logger.log_tabular('LossPi', average_only=True)
+            logger.log_tabular('LossQ', average_only=True)
+            logger.log_tabular('Time', time.time()-start_time)
+            logger.dump_tabular()
 
