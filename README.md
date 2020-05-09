@@ -5,6 +5,7 @@
 ## TODO 
 - Add Sim Video Recording functionality
     - See Deep-Reinforcement-Learning Ch.6 wrappers.py
+- Add loading functionality for saved models
 - Add Emotion Functions to Model 
     - Formulate emotions based off core RL features in Algo files
         - reward function (incorporate emotions?)
