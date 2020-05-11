@@ -9,7 +9,7 @@ import core
 from lib.logx import EpochLogger
 from lib.run_utils import setup_logger_kwargs
 
-DEFAULT_ENV_NAME =  'BipedalWalker-v3'
+DEFAULT_ENV_NAME =  'BipedalWalker-v2'
 
 
 if __name__ == '__main__':
@@ -43,9 +43,12 @@ if __name__ == '__main__':
     # Make simulation environment
     env_fn = lambda : gym.make(args.env)
     env, test_env = env_fn(), env_fn()
-    
+
+    # Limit test environment steps in case agent is stuck
+    test_env._max_episode_steps = 800
+
     # Save videos each testing iteration
-    test_env = gym.wrappers.Monitor(test_env, "test-recordings")
+    test_env = gym.wrappers.Monitor(test_env, "test-recordings", force=True)
 
 
     obs_dim = env.observation_space.shape 
@@ -122,12 +125,13 @@ if __name__ == '__main__':
     def test_agent():
         for j in range(args.num_test_episodes):
             o, d, ep_ret, ep_len = test_env.reset(), False, 0, 0
-            while not(d or (ep_len == args.max_ep_len)):
+            while not d:
                 # Take deterministic actions at test time (noise_scale=0)
                 o, r, d, _ = test_env.step(get_action(o, 0, net))
                 ep_ret += r
                 ep_len += 1
-            logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)
+            logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)    
+        test_env.env.close()
 
 ########################################################################################################################
 
