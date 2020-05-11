@@ -2,43 +2,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-def combined_shape(length, shape=None):
-    if shape is None:
-        return (length,)
-    return (length, shape) if np.isscalar(shape) else (length, *shape)
-
-
-def count_vars(module):
-    return sum([np.prod(p.shape) for p in module.parameters()])
-
-
-def mlp(sizes, activation, output_activation=nn.Identity):
-    "Build generic Neural Net for Actor/Critic"
-    layers = []
-    for j in range(len(sizes)-1):
-        act = activation if j < len(sizes)-2 else output_activation
-        layers += [nn.Linear(sizes[j], sizes[j+1]), act()]
-    return nn.Sequential(*layers)
-
-
-class MLPActorCritic(nn.Module):
-
-    def __init__(self, observation_space, action_space, hidden_sizes=(256,256),
-                 activation=nn.ReLU):
-        super().__init__()
-
-        obs_dim = observation_space.shape[0]
-        act_dim = action_space.shape[0]
-        act_limit = action_space.high[0]
-
-        # build policy and value functions
-        self.pi = MLPActor(obs_dim, act_dim, hidden_sizes, activation, act_limit)
-        self.q = MLPQFunction(obs_dim, act_dim, hidden_sizes, activation)
-
-    def act(self, obs):
-        with torch.no_grad():
-            return self.pi(obs).numpy()
-
 
 class ReplayBuffer:
     """
@@ -70,6 +33,25 @@ class ReplayBuffer:
                      rew=self.rew_buf[idxs],
                      done=self.done_buf[idxs])
         return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in batch.items()}
+
+
+class MLPActorCritic(nn.Module):
+
+    def __init__(self, observation_space, action_space, hidden_sizes=(256,256),
+                 activation=nn.ReLU):
+        super().__init__()
+
+        obs_dim = observation_space.shape[0]
+        act_dim = action_space.shape[0]
+        act_limit = action_space.high[0]
+
+        # build policy and value functions
+        self.pi = MLPActor(obs_dim, act_dim, hidden_sizes, activation, act_limit)
+        self.q = MLPQFunction(obs_dim, act_dim, hidden_sizes, activation)
+
+    def act(self, obs):
+        with torch.no_grad():
+            return self.pi(obs).numpy()
 
 
 class MLPActor(nn.Module):
@@ -119,4 +101,24 @@ def compute_loss_pi(data, net):
     o = data['obs']
     q_pi = net.q(o, net.pi(o))
     return -q_pi.mean()
+
+
+def mlp(sizes, activation, output_activation=nn.Identity):
+    "Build generic Neural Net for Actor/Critic"
+    layers = []
+    for j in range(len(sizes)-1):
+        act = activation if j < len(sizes)-2 else output_activation
+        layers += [nn.Linear(sizes[j], sizes[j+1]), act()]
+    return nn.Sequential(*layers)
+
+
+def combined_shape(length, shape=None):
+    if shape is None:
+        return (length,)
+    return (length, shape) if np.isscalar(shape) else (length, *shape)
+
+
+def count_vars(module):
+    return sum([np.prod(p.shape) for p in module.parameters()])
+
 

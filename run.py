@@ -43,12 +43,15 @@ if __name__ == '__main__':
     # Make simulation environment
     env_fn = lambda : gym.make(args.env)
     env, test_env = env_fn(), env_fn()
+    
+    # Save videos each testing iteration
+    test_env = gym.wrappers.Monitor(test_env, "test-recordings")
+
+
     obs_dim = env.observation_space.shape 
     act_dim = env.action_space.shape[0] 
     act_limit = env.action_space.high[0]
 
-    if args.record:
-        env = gym.wrappers.Monitor(env, args.record)
 
     # Instantiate Actor Critic Neural Net and Target Network
     net = core.MLPActorCritic(env.observation_space, env.action_space)
@@ -116,10 +119,8 @@ if __name__ == '__main__':
         a += noise_scale * np.random.randn(act_dim)
         return np.clip(a, -act_limit, act_limit)
 
-    def test_agent(render=False):
+    def test_agent():
         for j in range(args.num_test_episodes):
-            if render:
-                test_env.render()
             o, d, ep_ret, ep_len = test_env.reset(), False, 0, 0
             while not(d or (ep_len == args.max_ep_len)):
                 # Take deterministic actions at test time (noise_scale=0)
@@ -186,10 +187,7 @@ if __name__ == '__main__':
                 logger.save_state({'env':env}, None)
 
             # Test the performance of the deterministic version of the agent.
-            if epoch % 50 == 0:
-                test_agent(render=True)
-            else:
-                test_agent()
+            test_agent()
 
             # Log info about epoch
             logger.log_tabular('Epoch', epoch)
