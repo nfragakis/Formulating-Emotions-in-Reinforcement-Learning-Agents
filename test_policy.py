@@ -4,7 +4,7 @@ import os
 import os.path as osp
 import tensorflow as tf
 import torch
-from final import EpochLogger
+from lib.logx import EpochLogger
 from lib.logx import restore_tf_graph
 
 
