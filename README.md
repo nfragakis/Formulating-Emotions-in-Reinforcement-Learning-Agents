@@ -3,18 +3,17 @@
 ## [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
 ## [Markdown Cheat-Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 ## TODO 
-- Add loading functionality for loading saved models
-- Establish process to run on GPU clusters
 - Add Emotion Functions to Model 
     - Formulate emotions based off core RL features in Algo files
         - reward function (incorporate emotions?)
         - emotion functions (from types above)
-- README for running sims
 - Content Theory / Main webpage README
     - Write Wiki on Reinforcement Learning / DDPG Algo 
     - Connect concepts to content theory 
     - Explain SIM w/ Video Examples
+- Establish process to run on GPU clusters
 - Setup instructions to run in Colab
+- README for running sims
 
 
 ### Emotion Types
