@@ -12,7 +12,8 @@
     - Connect concepts to content theory 
     - Explain SIM w/ Video Examples
 - Setup video rendering while running in Colab
-- README for running sims
+- README for running sims (through Colab and locally)
+- Revisit Mujoco physics sims?
 
 
 ### Emotion Types

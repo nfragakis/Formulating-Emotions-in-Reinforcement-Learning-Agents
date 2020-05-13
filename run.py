@@ -132,7 +132,7 @@ if __name__ == '__main__':
                 ep_ret += r
                 ep_len += 1
             logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)    
-        test_env.env.close()
+            test_env.env.close()
 
 ########################################################################################################################
 
