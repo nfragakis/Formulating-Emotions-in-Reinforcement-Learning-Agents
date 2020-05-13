@@ -33,6 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('--start_steps', type=int, default=10000)
     parser.add_argument('--update_after', type=int, default=1000)
     parser.add_argument('--save_freq', type=int, default=1)
+    parser.add_argument('--colab', type=bool, default=False)
     parser.add_argument('--update_every', type=int, default=50)
     args = parser.parse_args()
 
@@ -48,7 +49,7 @@ if __name__ == '__main__':
     test_env._max_episode_steps = 800
 
     # Save videos each testing iteration
-    test_env = gym.wrappers.Monitor(test_env, "test-recordings", force=True, video_callable=False)
+    test_env = gym.wrappers.Monitor(test_env, "test-recordings", force=True)
 
 
     obs_dim = env.observation_space.shape 

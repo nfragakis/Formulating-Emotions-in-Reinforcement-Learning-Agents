@@ -11,8 +11,7 @@
     - Write Wiki on Reinforcement Learning / DDPG Algo 
     - Connect concepts to content theory 
     - Explain SIM w/ Video Examples
-- Establish process to run on GPU clusters
-- Setup instructions to run in Colab
+- Setup video rendering while running in Colab
 - README for running sims
 
 
