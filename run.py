@@ -48,7 +48,7 @@ if __name__ == '__main__':
     test_env._max_episode_steps = 800
 
     # Save videos each testing iteration
-    test_env = gym.wrappers.Monitor(test_env, "test-recordings", force=True)
+    test_env = gym.wrappers.Monitor(test_env, "test-recordings", force=True, video_callable=False)
 
 
     obs_dim = env.observation_space.shape 
