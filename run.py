@@ -33,7 +33,6 @@ if __name__ == '__main__':
     parser.add_argument('--start_steps', type=int, default=10000)
     parser.add_argument('--update_after', type=int, default=1000)
     parser.add_argument('--save_freq', type=int, default=1)
-    parser.add_argument('--colab', type=bool, default=False)
     parser.add_argument('--update_every', type=int, default=50)
     args = parser.parse_args()
 
@@ -110,7 +109,7 @@ if __name__ == '__main__':
 
         # Finally, update target networks by polyak averaging.
         with torch.no_grad():
-            for p, p_targ in zip(net.parameters(), net.parameters()):
+            for p, p_targ in zip(net.parameters(), targ_net.parameters()):
                 # NB: We use an in-place operations "mul_", "add_" to update target
                 # params, as opposed to "mul" and "add", which would make new tensors.
                 p_targ.data.mul_(polyak)
