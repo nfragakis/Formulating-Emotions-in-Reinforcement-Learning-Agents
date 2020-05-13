@@ -2,11 +2,40 @@
 
 ## [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
 ## [Markdown Cheat-Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+## Why we care about this domain
+Reinforcement Learning (RL) loosely models the way humans learn, as an agent 
+interacts with the environment it earns a reward proportional to its performance, 
+similar to Dopamine, the neurotransmitter which helps to moderate human emotion. 
+This represents a completely different paradigm than modern supervised learning 
+techniques, which learn entirely from historical examples in the training data. 
+Because our RL agent’s learning is not tied to the past, it can arrive at completely
+novel and creative solutions to the problems it faces. By developing a content theory 
+of the emotions present in these agents as they learn, I hope to gain a better understanding
+of how humans learn in the real world, as well as improving the training and performance 
+of these virtual agents. By developing AI that no longer learns through historical data, 
+but by it’s own interactions with an environment, I believe it is only a matter of time
+until we see an intelligence explosion that is completely seperate from that of human
+intelligence. 
+
+## Defined Terms in this content 
+- **Agent** - Makes decisions in a simulation based on a policy learned through interactions with an environment which provide rewards and punishment to guide effective behaviour.
+- **Environment**- Simulated world the agent lives in and interacts with.
+- **Reward**- Signal that an agent perceives from an environment signifying the quality of a given state. The agent’s goal is to learn the policy/behaviour that maximizes this value.
+- **State** - Complete description of the state of the environment (RGB matrix of pixel values, position of agents limbs, etc..).
+- **Action Space** - Set of all valid actions an agent can take within an environment. Could be continuous, such as controlling a simulated robot, or discrete, such as playing an Atari game.
+- **Policy** - A rule or decision framework that an agent uses to interact with its environment can be deterministic or stochastic in nature. (We generally prefer stochastic in training so as to encourage novel behaviours and experimentation within an environment).
+- **Policy Gradient** - technique that relies on optimizing parameterized policies w.r.t the expected long-term cumulative return by gradient descent (Neural Networks).
+- **Value Function** - The agent’s expected return or reward from the environment if it follows out its policy.
+- **Bellman Equations** - A set of dynamic programming algorithms critical in Reinforcement Learning, in which the value of your starting point is your return of the current state plus the expected value of future states when following out a policy.
+- **Trajectories** - Sequence of states and actions (often called episodes).
+
 ## TODO 
 - Add Emotion Functions to Model 
     - Formulate emotions based off core RL features in Algo files
         - reward function (incorporate emotions?)
         - emotion functions (from types above)
+- Split code repo and website into seperate repos
 - Content Theory / Main webpage README
     - Write Wiki on Reinforcement Learning / DDPG Algo 
     - Connect concepts to content theory 
@@ -55,6 +84,7 @@
     - [Open AI Learning to Cooperate](https://openai.com/blog/learning-to-cooperate-compete-and-communicate/)
     - [Open AI Learning to Communicate](https://openai.com/blog/learning-to-cooperate-compete-and-communicate/)
     - [Joy, Destress, Hope, Fear in RL](https://dl.acm.org/doi/10.5555/2615731.2616089O)
+    - [DDPG Paper](https://arxiv.org/abs/1509.02971)
 
 
     
