@@ -4,19 +4,21 @@
 ## [Markdown Cheat-Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 ## Why we care about this domain
-Reinforcement Learning (RL) loosely models the way humans learn, as an agent 
-interacts with the environment it earns a reward proportional to its performance, 
+Reinforcement Learning (RL) loosely models the way humans learn. As an agent 
+interacts with the environment it earns a reward proportional to its performance;
 similar to Dopamine, the neurotransmitter which helps to moderate human emotion. 
 This represents a completely different paradigm than modern supervised learning 
 techniques, which learn entirely from historical examples in the training data. 
 Because our RL agent’s learning is not tied to the past, it can arrive at completely
-novel and creative solutions to the problems it faces. By developing a content theory 
-of the emotions present in these agents as they learn, I hope to gain a better understanding
-of how humans learn in the real world, as well as improving the training and performance 
-of these virtual agents. By developing AI that no longer learns through historical data, 
-but by it’s own interactions with an environment, I believe it is only a matter of time
-until we see an intelligence explosion that is completely seperate from that of human
-intelligence. 
+novel and creative solutions to the problems it faces. Through developing a model of it's
+environment, the agent plans ahead, predicting outcomes for a range of possible actions
+and choosing the one it thinks will lead to the best outcome. By developing a 
+content theory of the emotions present in these agents as they learn, I hope to gain
+a better understanding of how humans learn in the real world, as well as improving the
+training and performance of these virtual agents. In developing AI that no longer learns
+through historical data, but by it’s own interactions with an environment, I believe it
+is only a matter of time until we see an intelligence explosion that is completely seperate from that of human
+from our own intelligence. 
 
 ## Defined Terms in this content 
 - **Agent** - Makes decisions in a simulation based on a policy learned through interactions with an environment which provide rewards and punishment to guide effective behaviour.
@@ -37,12 +39,11 @@ intelligence.
         - emotion functions (from types above)
 - Split code repo and website into seperate repos
 - Content Theory / Main webpage README
-    - Write Wiki on Reinforcement Learning / DDPG Algo 
+    - Write Wiki on Reinforcement Learning 
     - Connect concepts to content theory 
     - Explain SIM w/ Video Examples
-- Setup video rendering while running in Colab
+    - Technical Addendum on RL and mathematics of DDPG algo
 - README for running sims (through Colab and locally)
-- Revisit Mujoco physics sims?
 
 
 ### Emotion Types

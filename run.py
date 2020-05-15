@@ -116,11 +116,11 @@ if __name__ == '__main__':
                 p_targ.data.add_((1 - polyak) * p.data)
 
 
-    ### MOVE TO CORE?
     def get_action(o, noise_scale, net=net):
         a = net.act(torch.as_tensor(o, dtype=torch.float32))
         a += noise_scale * np.random.randn(act_dim)
         return np.clip(a, -act_limit, act_limit)
+
 
     def test_agent():
         for j in range(args.num_test_episodes):
