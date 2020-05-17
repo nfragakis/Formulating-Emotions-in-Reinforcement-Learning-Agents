@@ -3,6 +3,7 @@
 #### [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
 #### [Markdown Cheat-Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
+
 ## Description of the Domain
 In this project, I propose a solution for formulating the emotions of virtual agents as they interact with a 
 simulated world, learning how to walk and interact with their environment. We will establish a basic understanding 
@@ -74,7 +75,12 @@ from our own intelligence.
 
 ## Walkthrough of Implementation
 
-### Simulation and Scope 
+### Simulation and Scope
+<a href="https://youtu.be/EJ3LfvFKxgs " target="_blank"><img src="https://img.youtube.com/vi/EJ3LfvFKxgs/0.jpg" 
+alt="Simulation Video" width="320" height="240" border="0" /></a>
+
+<u>Click image to view video</u>
+
 The initial simulation takes place in the OpenAI Gym Python library's [Bipedal-Walker Environment](https://gym.openai.com/envs/BipedalWalker-v2/).
 The agent's goal is to develop an optimal policy to get from one end of the 2-d simulated environment to the other. The agent receives a reward 
 of 300 points if it makes it to the end and -100 points if it falls. Additionally, a small reward is received for each forward step it takes.
