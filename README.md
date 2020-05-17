@@ -1,5 +1,3 @@
-# Formulating Emotions in Reinforcement Learning Agents
-
 #### [Code Repo](https://github.com/nfragakis/nfragakis.github.io)
 #### [Content Theory Doc](https://docs.google.com/document/d/1zh4VayKWxYLirSwCZilDiCEzKVXImzz4uGE0EDfc9_A/edit#)
 #### [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
