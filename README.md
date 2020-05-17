@@ -45,7 +45,6 @@ from our own intelligence.
 - **Simulation Environment** - 2D BipedalWalker simulation in which the agent must learn how to walk from one end of environment to another as efficiently as possible.
 - **Agent** 
 - **State** 
-- **
 
 ## Reinforcement Learning 
 - Reinforcement Learning (RL), a sub-field of AI, consists of an agent who learns a policy, or set of behaviors, over time through episodic interactions with its environment.
@@ -72,13 +71,25 @@ from our own intelligence.
 ##### **Frustration**
 
 ## Content Theory Conclusions
+**Conclusions** - By modeling the structures from which humans learn in a virtual setting,
+we open up the possibility to understand the internal state of an agent at all times
+throughout this process, leading to an improvement in the understanding of how both
+artificial and biological agents learn through interactions with their environment.
+
+**Summary** - In this paper, we have detailed the framework of Reinforcement Learning, 
+how a software agent in a virtual simulation is able to learn optimal behavior through episodic 
+interactions with its environment. We discussed the many parallels between this process and the 
+Somatic Marker Hypothesis, which details how biological entities map specific sensory inputs from 
+environment to actions, emotions, and outcomes. Finally, we outline the process from which we can 
+formulate the emotions of our artificial agents as they learn, leading to a better understanding 
+of the internal processes and emotional states that arise in both artificial and biological agents.
+
 
 ## Walkthrough of Implementation
 
 ### Simulation and Scope
 <a href="https://youtu.be/EJ3LfvFKxgs " target="_blank"><img src="https://img.youtube.com/vi/EJ3LfvFKxgs/0.jpg" 
 alt="Simulation Video" width="320" height="240" border="0" /></a>
-
 <u>Click image to view video</u>
 
 The initial simulation takes place in the OpenAI Gym Python library's [Bipedal-Walker Environment](https://gym.openai.com/envs/BipedalWalker-v2/).
