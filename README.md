@@ -1,4 +1,5 @@
 #### [Code Repo](https://github.com/nfragakis/nfragakis.github.io)
+#### [Train your own agent](https://colab.research.google.com/drive/1gCgDN338dJ9RNEUIW0nSg8B2nxEWRn4c?usp=sharing)
 #### [Content Theory Doc](https://docs.google.com/document/d/1zh4VayKWxYLirSwCZilDiCEzKVXImzz4uGE0EDfc9_A/edit#)
 #### [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
 
