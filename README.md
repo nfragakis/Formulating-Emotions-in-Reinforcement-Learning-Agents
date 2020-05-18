@@ -1,7 +1,6 @@
 #### [Code Repo](https://github.com/nfragakis/nfragakis.github.io)
 #### [Content Theory Doc](https://docs.google.com/document/d/1zh4VayKWxYLirSwCZilDiCEzKVXImzz4uGE0EDfc9_A/edit#)
 #### [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
-#### [Markdown Cheat-Sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
 
 ## Description of the Domain
@@ -28,7 +27,7 @@ through historical data, but by it’s own interactions with an environment, I b
 is only a matter of time until we see an intelligence explosion that is completely seperate from that of human
 from our own intelligence. 
 
-## Defined Terms in this content 
+## Defined Terms in this Content 
 - **Agent** - Makes decisions in a simulation based on a policy learned through interactions with an environment which provides reward and punishment to guide effective behaviour.
 - **Environment**- Simulated world the agent lives in and interacts with.
 - **Reward**- Signal that an agent perceives from an environment signifying the quality of a given state. The agent’s goal is to learn the policy/behaviour that maximizes this value.
@@ -90,7 +89,6 @@ of the internal processes and emotional states that arise in both artificial and
 ### Simulation and Scope
 <a href="https://youtu.be/EJ3LfvFKxgs " target="_blank"><img src="https://img.youtube.com/vi/EJ3LfvFKxgs/0.jpg" 
 alt="Simulation Video" width="320" height="240" border="0" /></a>
-<u>Click image to view video</u>
 
 The initial simulation takes place in the OpenAI Gym Python library's [Bipedal-Walker Environment](https://gym.openai.com/envs/BipedalWalker-v2/).
 The agent's goal is to develop an optimal policy to get from one end of the 2-d simulated environment to the other. The agent receives a reward 
