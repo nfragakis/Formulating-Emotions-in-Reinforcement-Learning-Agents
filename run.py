@@ -105,7 +105,7 @@ if __name__ == '__main__':
             p.requires_grad = True
 
         # Record things
-        logger.store(LossQ=loss_q.item(), LossPi=loss_pi.item(), **loss_info)
+        logger.store(LossQ=loss_q.item(), LossPi=loss_pi.item(), **loss_info, Uncertainty=loss_q.item())
 
         # Finally, update target networks by polyak averaging.
         with torch.no_grad():
@@ -133,6 +133,7 @@ if __name__ == '__main__':
             logger.store(TestEpRet=ep_ret, TestEpLen=ep_len)    
             test_env.env.close()
 
+    to_tens = lambda x : torch.as_tensor(x, dtype=torch.float32)
 ########################################################################################################################
 
     # Setup model saving
@@ -141,7 +142,13 @@ if __name__ == '__main__':
     # Prepare for interaction with environment
     total_steps = args.steps_per_epoch * args.epochs
     start_time = time.time()
-    o, ep_ret, ep_len = env.reset(), 0, 0
+    o, ep_ret, ep_len, r = env.reset(), 0, 0, 0
+
+    # Instantiate emotion values
+    joy = 0
+    hope = 0
+    fear = 0
+    uncertainty = 0
     
 
     # MAIN TRAINING LOOP
@@ -155,25 +162,42 @@ if __name__ == '__main__':
             a = env.action_space.sample()
 
         # Step the environment 
-        o2, r, d, _ = env.step(a)
-        ep_ret += r 
+        o2, r2, d, _ = env.step(a)
+        ep_ret += r2
         ep_len += 1 
 
+        ## EMOTION FORMULATION
+
+        # Reward from environment + expected reward - value of previous state
+        joy = r2 + net.q(to_tens(o), to_tens(a)) - r
+
+        # Hope / Fear is the agent's expected value of the next step
+        if net.q(to_tens(o), to_tens(a)) > 0:
+            hope = net.q(to_tens(o), to_tens(a))
+            fear = 0
+        else:
+            fear = -1*net.q(to_tens(o), to_tens(a))
+            hope = 0 
+        
         # Ignore the "done" signal if it comes from hitting the time
         # horizon (that is, when it's an artificial terminal signal
         # that isn't based on the agent's state)
         d = False if ep_len==args.max_ep_len else d
 
         # Store experience in replay buffer 
-        replay_buffer.store(o, a, r, o2, d)
+        replay_buffer.store(o, a, r2, o2, d)
 
         # Update most recent observation of state 
         o = o2 
+        r = r2
 
         # End of trajectory handling 
         if d or (ep_len == args.max_ep_len):
             logger.store(EpRet=ep_ret, EpLen=ep_len)
             o, ep_ret, ep_len = env.reset(), 0, 0
+            joy = 0
+            hope = 0
+            fear = 0
 
         # Update Neural Net Parameters 
         if (t >= args.update_after) and (t % args.update_every == 0):
@@ -203,6 +227,10 @@ if __name__ == '__main__':
             logger.log_tabular('QVals', with_min_and_max=True)
             logger.log_tabular('LossPi', average_only=True)
             logger.log_tabular('LossQ', average_only=True)
+            logger.log_tabular('Joy', with_min_and_max=True)
+            logger.log_tabular('Hope', with_min_and_max=True)
+            logger.log_tabular('Fear', with_min_and_max=True)
+            logger.log_tabular('Uncertainty', with_min_and_max=True)
             logger.log_tabular('Time', time.time()-start_time)
             logger.dump_tabular()
 

@@ -109,11 +109,7 @@ def load_pytorch_policy(fpath, itr, deterministic=False):
 
 def run_policy(env, get_action, max_ep_len=None, num_episodes=100, render=True):
 
-    assert env is not None, \
-        "Environment not found!\n\n It looks like the environment wasn't saved, " + \
-        "and we can't run the agent in it. :( \n\n Check out the readthedocs " + \
-        "page on Experiment Outputs for how to handle this situation."
-
+    assert env is not None
     logger = EpochLogger()
     o, r, d, ep_ret, ep_len, n = env.reset(), 0, False, 0, 0, 0
     while n < num_episodes:
