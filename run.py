@@ -193,7 +193,7 @@ if __name__ == '__main__':
 
         # End of trajectory handling 
         if d or (ep_len == args.max_ep_len):
-            logger.store(EpRet=ep_ret, EpLen=ep_len)
+            logger.store(EpRet=ep_ret, EpLen=ep_len, Joy=joy, Hope=hope, Fear=fear)
             o, ep_ret, ep_len = env.reset(), 0, 0
             joy = 0
             hope = 0
