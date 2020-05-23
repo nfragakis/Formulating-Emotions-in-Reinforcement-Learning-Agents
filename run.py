@@ -169,7 +169,13 @@ if __name__ == '__main__':
         ## EMOTION FORMULATION
 
         # Reward from environment + expected reward - value of previous state
-        joy = r2 + net.q(to_tens(o), to_tens(a)) - r
+        joy_val = r2 + net.q(to_tens(o), to_tens(a)) - r
+        if joy_val > 0:
+            joy = joy_val
+            distress = 0
+        else:
+            joy = 0 
+            distress = -1*joy_val
 
         # Hope / Fear is the agent's expected value of the next step
         if net.q(to_tens(o), to_tens(a)) > 0:
