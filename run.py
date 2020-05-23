@@ -199,7 +199,7 @@ if __name__ == '__main__':
 
         # End of trajectory handling 
         if d or (ep_len == args.max_ep_len):
-            logger.store(EpRet=ep_ret, EpLen=ep_len, Joy=joy, Hope=hope, Fear=fear)
+            logger.store(EpRet=ep_ret, EpLen=ep_len, Joy=joy, Distress=distress, Hope=hope, Fear=fear)
             o, ep_ret, ep_len = env.reset(), 0, 0
             joy = 0
             hope = 0
@@ -234,6 +234,7 @@ if __name__ == '__main__':
             logger.log_tabular('LossPi', average_only=True)
             logger.log_tabular('LossQ', average_only=True)
             logger.log_tabular('Joy', with_min_and_max=True)
+            logger.log_tabular('Distress', with_min_and_max=True)
             logger.log_tabular('Hope', with_min_and_max=True)
             logger.log_tabular('Fear', with_min_and_max=True)
             logger.log_tabular('Uncertainty', with_min_and_max=True)
