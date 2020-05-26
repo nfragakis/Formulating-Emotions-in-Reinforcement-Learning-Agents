@@ -104,11 +104,19 @@ def compute_loss_pi(data, net):
 
 
 def mlp(sizes, activation, output_activation=nn.Identity):
-    "Build generic Neural Net for Actor/Critic"
+    """
+    Build generic Neural Net for Actor/Critic.
+    Inputs
+        Neural Net Size = [Observation Space of Sim x Action Space]
+        Activation = ReLU 
+        Observation Space
+    Output
+        Action 
+    """
     layers = []
     for j in range(len(sizes)-1):
         act = activation if j < len(sizes)-2 else output_activation
-        layers += [nn.Linear(sizes[j], sizes[j+1]), act()]
+        layers += [nn.Linear(sizes[j], sizes[j+1]), act(), nn.Dropout()]
     return nn.Sequential(*layers)
 
 
