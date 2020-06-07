@@ -1,8 +1,10 @@
 #### [Code Repo](https://github.com/nfragakis/nfragakis.github.io)
-#### [Train your own agent](https://colab.research.google.com/drive/1gCgDN338dJ9RNEUIW0nSg8B2nxEWRn4c?usp=sharing)
 #### [Content Theory Doc](https://docs.google.com/document/d/1zh4VayKWxYLirSwCZilDiCEzKVXImzz4uGE0EDfc9_A/edit#)
-#### [Ideas File](https://docs.google.com/document/d/1c3yM_woKnLbukBI9sGDSJJ4zpply-S0q2qNzZN6L4VE/edit)
+#### [Implementation Walkthrough](https://youtu.be/n5nuqHigvT0)
+#### [Train you own Agent](https://colab.research.google.com/drive/1gCgDN338dJ9RNEUIW0nSg8B2nxEWRn4c?usp=sharing)
 
+<a href="https://youtu.be/EJ3LfvFKxgs " target="_blank"><img src="https://img.youtube.com/vi/EJ3LfvFKxgs/0.jpg" 
+alt="Simulation Video" width="480" height="360" border="0" /></a>
 
 ## Description of the Domain
 In this project, I propose a solution for formulating the emotions of virtual agents as they interact with a 
@@ -35,40 +37,57 @@ from our own intelligence.
 - **State** - Complete description of the environment (Position of agents limbs, speed, lidar rangefinder, and angular measurements) 
 - **Action Space** - Set of all valid actions an agent can take within an environment. Could be continuous, such as controlling a simulated robot, or discrete, such as playing an Atari game.
 - **Policy** - A rule or decision framework that an agent uses to interact with its environment can be deterministic or stochastic in nature. (We generally prefer stochastic in training so as to encourage novel behaviours and experimentation within an environment).
-- **Memory Buffer** - Queue of past simulation events containing observations on status of environment, actions taken, and the overall reward and outcome derived from action.
-- **Policy Gradient** - technique that relies on optimizing parameterized policies w.r.t the expected long-term cumulative return by gradient descent (Neural Networks).
-- **Value Function** - The agent’s expected return or reward from the environment if it follows out its policy.
-- **Bellman Equations** - A set of dynamic programming algorithms critical in Reinforcement Learning, in which the value of your starting point is your return of the current state plus the expected value of future states when following out a policy.
-- **Trajectories** - Sequence of states and actions (often called episodes).
-
-## Objects in the Domain
-- **Simulation Environment** - 2D BipedalWalker simulation in which the agent must learn how to walk from one end of environment to another as efficiently as possible.
-- **Agent** 
-- **State** 
+- **Joy** - Experienced when the agents reward from the environment and positive expectations of that reward overshadow the previous moments valuation.
+- **Distress** - Feeling the agent gets when it’s expectations and reality drop below its previous valuation of the environment.
+- **Hope** - The agent carries positive expectations of future events.
+- **Fear** - Negative expectations within the agent of how future events will play out.
+- **Uncertainty** - The clash between an agent's expectation of how future events will play out with the ground reality of the situation. 
 
 ## Reinforcement Learning 
 - Reinforcement Learning (RL), a sub-field of AI, consists of an agent who learns a policy, or set of behaviors, over time through episodic interactions with its environment.
 - The agent’s actions are chosen based on its inputs, representing the current state of the environment, which can be likened to sensory inputs of biological entities.
-- Punishments and rewards returned to the agent are similar to the biological dopamine mechanisms which help to regulate human behavior.
-- Agent maintains a bank of memories from which it draws from in the learning process.
+- In order to identify the best action in a situation, our agent develops a policy that maps a given state and action to the expected reward, very similar
+    to how this mechanism functions in biological entities.
+- Over time these mappings of state to action become habitual leading to consistent behaviour emerging.
 
 ## Somatic Marker Hypothesis
 - Somatic Markers are feelings within one's body, that over time become associated with certain emotional states. 
 - Markers have a profound impact on decision-making in biological agents, particularly regarding the ability to make fast decisions in complex environments. 
+- These Somatic Markers and the actions that arise from them are the foundation of "Gut-Feelings" or Intuition that we unconsciously experience.
 - Over time these bodily states and subsequent emotions become linked to particular situations faced and the resulting outcome, similar to the RL framework outlined above.
-- Through repetition these marker-action pairs become further fortified, leading to consistent behaviors being adapted by a person.
-- Consider the example of walking in the woods and seeing a snake.
 - These structures in cognition are absolutely essential for humans and other biological entities to be able to react rapidly in situations without having to employ rationality or logic.
 
-
 ## Formulation of Emotions
-##### **Joy**
-##### **Distress**
-##### **Hope**
-##### **Fear**
-##### **Certainty**
-##### **Satisfaction**
-##### **Frustration**
+- At a high-level, we use a Neural Network model to act as the primary pattern matching function, taking in the state variables
+from the environment and oututting a specific action to maximize the expected return to our agent.
+- By developing formulas representing an agent's internal state as it is interacting with the environment, we are able to 
+gain insight into how the learning process is unfolding.
+
+
+#### Joy & Distress
+- Joy and Distress are experienced as the outcome of the situation, plus our expectations of that outcome 
+are balanced with the previous emotional state we are coming from.
+- In RL Terms this is represented as the reward received from the interaction with the environment plus the
+expected reward, minus the reward received at the previous timestep. When this is postive we experience Joy,
+when negative this is formulated as Distress.
+
+<img src="https://latex.codecogs.com/gif.latex?Joy/Distress = R(s_t,a_t) + Q^{\pi}(s,a) - R(s_{t-1}, a_{t-1})">
+
+#### Hope & Fear 
+- Hope and Fear are a direct measure of our expectations about the future, within the context of the actions 
+we plan on taking.
+- In RL terms this is fairly simply to formulate as our value function does exactly this, matching an state action
+pair to our expected reward or outcome. When this is postive the agent experiences Hope and Fear when negative.
+
+<img src="https://latex.codecogs.com/gif.latex?Hope/Fear = Q^{\pi}(s,a)">
+
+#### **Unertainty**
+- Uncertainty is defined as the class between our expectations of reality, and the underlying truth. What actually occurs.
+- In RL terms, we use the differentiable optimization function for our Q-Value Neural Network. The Mean-Squared Error of 
+our expected outcome, or value of the chosen action within our current state, against the reward actually received by the 
+environment.
+
+<img src="https://latex.codecogs.com/gif.latex?Uncertainty = \frac{1}{n}\sum_{i=1}^{n}(Q^{\pi}(s,a) - R(s_t, a_t))^2">
 
 ## Content Theory Conclusions
 **Conclusions** - By modeling the structures from which humans learn in a virtual setting,
@@ -97,35 +116,35 @@ of 300 points if it makes it to the end and -100 points if it falls. Additionall
 Any form of torque applied comes with a small penalty, thus the agent is guided to complete it's task as efficiently as possible. The state values 
 that the agent has access to include it's Speed, Position of Joints, Lidar Rangefinder Measurements, and other Angular characteristics.
 
-## Blue Sky Ideas 
 
 ## Technical Addendum
-#### Bellman Equations 
-#### Q-Learning
-#### Policy Gradient
 #### Actor-Critic Model 
 #### Current State of the Art and Future Possibilities in RL
 
 ## Suggested Readings
+- **Spinning Up in Deep RL (Open AI)**
+    - https://spinningup.openai.com/en/latest/index.html
+    - -Best, code first, introduction to Deep Reinforcement Learning I was able to find, highly recommend
+- **Reinforcement Learning in artificial and biological systems**
+    - Neftci, E.O., Averbeck, B.B. Reinforcement learning in artificial and biological systems. Nat Mach Intell 1, 133–143 (2019).
+    - https://www.nature.com/articles/s42256-019-0025-4?draft=marketing
+    - Great intro linking state of the art research in both biology and computer science
+- **Introduction to Reinforcement Learning**
+    - Richard S. Sutton and Andrew G. Barto. 1998. Introduction to Reinforcement Learning (1st. ed.). MIT Press, Cambridge, MA, USA.
+    - https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf  
+    - Universally recognized as the most comprehensive introductory textbook on the subject of RL.
+**David Siver (Deep Mind) Intro to RL Course**
+    - https://www.davidsilver.uk/teaching/
+    - One of the leaders of the RL team at DeepMind, famous for many breaking achievements such as defeating the World Champion at Go and Starcraft 
 
-## Bibliography
+- **OpenAI multi-agent hide and seek**
+    - https://openai.com/blog/emergent-tool-use/
+    - Breakthrough work in RL where agents learn to cooperate and develop highly creative strategies in order to beat another team of agents in Hide and Go Seek. Highly recommend checking this work out, amazing what they were able to accomplish.
 
 
-- Content Theory
-    - [Read Somatic Marker Paper](https://www.brainmaster.com/software/pubs/brain/Dunn%20somatic_marker_hypothesis.pdf)
-    - [Castlefranchi Felt Emotions (p. 75](https://d2l.depaul.edu/d2l/le/content/745964/viewContent/6387839/View)
-    - [Somatic Wiki](https://en.wikipedia.org/wiki/Somatic_marker_hypothesis)
-    - [Emotion Driven RL](https://pdfs.semanticscholar.org/0818/f199953a13fd933759beb8b2f461225c1cd8.pdf)
-    - [Emotion in Q-Learning](https://arxiv.org/pdf/1609.01468.pdf)
-    - [Emotions in RL Agents](https://arxiv.org/pdf/1705.05172.pdf)
-    - [Social Influence in Multi-Agent RL](https://arxiv.org/pdf/1810.08647.pdf)
-    - [Open AI Learning to Cooperate](https://openai.com/blog/learning-to-cooperate-compete-and-communicate/)
-    - [Open AI Learning to Communicate](https://openai.com/blog/learning-to-cooperate-compete-and-communicate/)
-    - [Joy, Destress, Hope, Fear in RL](https://dl.acm.org/doi/10.5555/2615731.2616089O)
-    - [DDPG Paper](https://arxiv.org/abs/1509.02971)
-    - [RL in Bio and Artificial Agents](https://www.nature.com/articles/s42256-019-0025-4)
-    - [OCC model of Emotions](https://journals-sagepub-com.ezproxy.depaul.edu/doi/10.1177/1754073913489751)
-    - [Blog Posting (Somatic Markers)](https://imotions.com/blog/somatic-marker-hypothesis/)
+
+
+
 
 
 
