@@ -238,7 +238,7 @@ class ReplayBuffer:
         return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in batch.items()}
 ```
 
-The implementation for the model and replay buffer can be found in the core.py file available in the code repository
+The implementation for the model and replay buffer can be found in the [core.py](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/core.py) file available in the code repository
 #### Running Experiments 
 The main experimentation code for my implementation lies in the run.py file.  It was designed to be run from the command
 line and has a number of different parameters available to tune experimentation such as batch size for our neural nets, 
