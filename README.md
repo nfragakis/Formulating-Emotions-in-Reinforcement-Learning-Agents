@@ -288,16 +288,16 @@ due to limits in time and computational power, we are left with the below result
 on a GPU.
 
 #### Joy vs Distress
-![Joy vs. Distress](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Joy:Distress.png)
+![Joy vs. Distress](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Joy:Distress.png?raw=true)
 
 #### Hope vs. Fear
-![Hope vs. Fear](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Hope:Fear.png)
+![Hope vs. Fear](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Hope:Fear.png?raw=true)
 
 #### Uncertainty 
-![Uncertainty](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Uncertainty.png)
+![Uncertainty](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Uncertainty.png?raw=true)
 
 #### Reward
-![Reward](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Reward.png)
+![Reward](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Reward.png?raw=true)
 
 ## Suggested Readings
 - **Spinning Up in Deep RL (Open AI)**
