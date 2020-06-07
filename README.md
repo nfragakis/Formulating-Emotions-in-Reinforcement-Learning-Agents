@@ -297,7 +297,8 @@ in the google Colab environment [Colab Notebook](https://colab.research.google.c
     - Richard S. Sutton and Andrew G. Barto. 1998. Introduction to Reinforcement Learning (1st. ed.). MIT Press, Cambridge, MA, USA.
     - [Book Download (distributed freely)](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf)
     - Universally recognized as the most comprehensive introductory textbook on the subject of RL.
-**David Siver (Deep Mind) Intro to RL Course**
+
+- **David Siver (Deep Mind) Intro to RL Course**
     - [Course Link](https://www.davidsilver.uk/teaching/)
     - One of the leaders of the RL team at DeepMind, famous for many breaking achievements such as defeating the World Champion at Go and Starcraft 
 
