@@ -271,15 +271,21 @@ For a detailed walkthrough of the code and examples on how to run the experiment
 in the google Colab environment [Colab Notebook](https://colab.research.google.com/drive/1gCgDN338dJ9RNEUIW0nSg8B2nxEWRn4c?usp=sharing).
 
 ### Results
-
-### Current State of the Art and Future Possibilities in RL
-- Multi-Agent RL
-- SuperHuman Game Play
-    - AlphaGo
-    - StarCraft
-    - Rubics Cube 
-
-- Data Center Energy Control
+After running a number of experiments and averaging out the results, a couple of patterns emerge. First, with regard 
+to Joy and Distress, the agent generally starts out with a large degree of naive overconfidence. It is unfamiliar with 
+the environment and thus does not know what to expect. Because of this there is a large amount of Joy, but also, an above 
+average amount of distress as well. This is primarily due to the unstable nature of the emotions at this stage and the high
+variability present in our models expectations of rewards. As the training begins to stabilize, we see the joy value drop 
+sharply and remain low until the agent finally begins to understand and operate efficiently within the environment.
+Distress; however, remains fairly high unil the agent begins to learn an optimal policy.  The same trend holds for hope and
+fear. The agent initially starts out very hopeful about the environment, meaning it is expecting a high reward for its actions.
+This quickly plummets as it gains more experience, before ultimately shooting back up once it gains an understanding of what to
+expect. The results for uncertainty are interesting, in that they follow a similar pattern of starting off very high, tailing
+off, and then rising towards the end of training. Initially, this makes sense as we would expect to have a high degree of 
+uncertainty, and subsequently updates to our model, early on. However, the high spike around epoch 400 is a bit surprising. 
+For future experiments I am interested in running the training process for longer and in more complex environments; however, 
+due to limits in time and computational power, we are left with the below results, transpiring from around 12 hours of training
+on a GPU.
 
 
 ## Suggested Readings
