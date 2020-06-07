@@ -287,11 +287,22 @@ For future experiments I am interested in running the training process for longe
 due to limits in time and computational power, we are left with the below results, transpiring from around 12 hours of training
 on a GPU.
 
+#### Joy vs Distress
+![Joy vs. Distress](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Joy:Distress.png)
+
+#### Hope vs. Fear
+![Hope vs. Fear](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Hope:Fear.png)
+
+#### Uncertainty 
+![Uncertainty](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Uncertainty.png)
+
+#### Reward
+![Reward](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/data/Reward.png)
 
 ## Suggested Readings
 - **Spinning Up in Deep RL (Open AI)**
     - [Website](https://spinningup.openai.com/en/latest/index.html)
-    - -Best, code first, introduction to Deep Reinforcement Learning I was able to find, highly recommend
+    - Best, code first, introduction to Deep Reinforcement Learning I was able to find, highly recommend
 - **Reinforcement Learning in artificial and biological systems**
     - Neftci, E.O., Averbeck, B.B. Reinforcement learning in artificial and biological systems. Nat Mach Intell 1, 133–143 (2019).
     - [Paper](https://www.nature.com/articles/s42256-019-0025-4?draft=marketing)
