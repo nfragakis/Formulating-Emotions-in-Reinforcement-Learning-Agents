@@ -155,6 +155,49 @@ class MLPActorCritic(nn.Module):
             return np.clip(action, -act_limit, act_limit)
 ```
 
+As we have two seperate Neural Networks present in our model, we follow two seperate steps in order to calculate our loss functions,
+the first, for the Q Function, involves taking in a batch of environment interactions from our replay buffer, computing the 
+state-action pair values for each action within the domain, and comparing this to target network as discussed [here](https://spinningup.openai.com/en/latest/algorithms/ddpg.html#the-q-learning-side-of-ddpg)
+
+```python
+
+def compute_loss_q(data, net, targ_net, gamma):
+    o, a, r, o2, d = data['obs'], data['act'], data['rew'], data['obs2'], data['done']
+
+    q = net.q(o,a)
+
+    # Bellman backup for Q function
+    with torch.no_grad():
+        q_pi_targ = targ_net.q(o2, targ_net.pi(o2))
+        backup = r + gamma * (1 - d) * q_pi_targ
+
+    # MSE loss against Bellman backup
+    loss_q = ((q - backup)**2).mean()
+
+    # Useful info for logging
+    loss_info = dict(QVals=q.detach().numpy())
+
+    return loss_q, loss_info
+```
+
+The loss function for our Policy Net is much simpler. We simply take observations from our recorded interactions with the 
+environment and allow the Q-Function to calculate an expected value based on the observation and return the negative of the output (must use negative to properly adjust Neural Net paramters)
+For more information about this check out this [link](https://spinningup.openai.com/en/latest/algorithms/ddpg.html#the-policy-learning-side-of-ddpg)
+
+```python
+
+def compute_loss_pi(data, net):
+    o = data['obs']
+    q_pi = net.q(o, net.pi(o))
+    return -q_pi.mean()
+
+```
+
+The actual parameter update function is out of the scope of this overview, but can be found in the [run.py](https://github.com/nfragakis/Formulating-Emotions-in-Reinforcement-Learning-Agents/blob/master/run.py) 
+file of the repository.
+
+
+##### Replay Buffer
 Instead of learning at each step of the simulation, which would not enable us to act in a timely manner within our 
 simulation, the model makes use of a Replay Buffer. This buffer stores the relevant information such as the state 
 of the environment, action taken, reward, and subsequent state the agent finds itself in. Once the agent has enough 
