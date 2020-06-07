@@ -4,7 +4,7 @@
 #### [Train you own Agent](https://colab.research.google.com/drive/1gCgDN338dJ9RNEUIW0nSg8B2nxEWRn4c?usp=sharing)
 
 <a href="https://youtu.be/EJ3LfvFKxgs " target="_blank"><img src="https://img.youtube.com/vi/EJ3LfvFKxgs/0.jpg" 
-alt="Simulation Video" width="480" height="360" border="0" /></a>
+alt="Simulation Video" width="360" height="240" border="0" /></a>
 
 ## Description of the Domain
 In this project, I propose a solution for formulating the emotions of virtual agents as they interact with a 
@@ -33,10 +33,28 @@ from our own intelligence.
 ## Defined Terms in this Content 
 - **Agent** - Makes decisions in a simulation based on a policy learned through interactions with an environment which provides reward and punishment to guide effective behaviour.
 - **Environment**- Simulated world the agent lives in and interacts with.
-- **Reward**- Signal that an agent perceives from an environment signifying the quality of a given state. The agent’s goal is to learn the policy/behaviour that maximizes this value.
+
 - **State** - Complete description of the environment (Position of agents limbs, speed, lidar rangefinder, and angular measurements) 
+
+<img src="https://latex.codecogs.com/gif.latex?s_t">
+
 - **Action Space** - Set of all valid actions an agent can take within an environment. Could be continuous, such as controlling a simulated robot, or discrete, such as playing an Atari game.
+
+<img src="https://latex.codecogs.com/gif.latex?\sum(a_t)">
+
+- **Reward**- Signal that an agent perceives from an environment signifying the quality of a given state. The agent’s goal is to learn the policy/behaviour that maximizes this value.
+
+<img src="https://latex.codecogs.com/gif.latex?R(s_t, a_t)">
+
+- **Value Function** - Mapping a particular state-action pair to the agents expected reward of this action. Primary learning objective in RL.
+
+<img src="https://latex.codecogs.com/gif.latex?Q(s,a)">
+
 - **Policy** - A rule or decision framework that an agent uses to interact with its environment can be deterministic or stochastic in nature. (We generally prefer stochastic in training so as to encourage novel behaviours and experimentation within an environment).
+
+<img src="https://latex.codecogs.com/gif.latex?\pi">
+
+- **Somatic Marker** - feelings in the body that are associated with emotions. Somatic Markers strongly influence decision-making at the unconscious level.
 - **Joy** - Experienced when the agents reward from the environment and positive expectations of that reward overshadow the previous moments valuation.
 - **Distress** - Feeling the agent gets when it’s expectations and reality drop below its previous valuation of the environment.
 - **Hope** - The agent carries positive expectations of future events.
@@ -116,10 +134,126 @@ of 300 points if it makes it to the end and -100 points if it falls. Additionall
 Any form of torque applied comes with a small penalty, thus the agent is guided to complete it's task as efficiently as possible. The state values 
 that the agent has access to include it's Speed, Position of Joints, Lidar Rangefinder Measurements, and other Angular characteristics.
 
+### Architecture
+#### Model 
+The primary model used in my implementation is the Deep Deterministic Policy Gradient (DDPG) algorithm, or Actor-Critic model
+as it is sometimes entitled. This model uses Neural Networks as the primary pattern matching function to map a state-action 
+pair to an incentive value, and ultimately an action within our simulation. This model concurrently learns a Q-Function, which 
+maps each state-action pair to it’s value, and a policy, which learns optimal actions through interpreting the Q-Functions mappings.
+Because our model learns both of these functions in parallel, it is able to incorporate exploration into its actions, 
+as opposed to acting in a deterministic manner based on the highest value in our Q-Function. 
+The policy allows room for random exploration and avoids getting stuck in a local optimum.
 
-## Technical Addendum
-#### Actor-Critic Model 
-#### Current State of the Art and Future Possibilities in RL
+For more information check out the documentation [here](https://spinningup.openai.com/en/latest/algorithms/ddpg.html)
+
+```python
+
+class MLPActorCritic(nn.Module):
+
+    def __init__(self, observation_space, action_space, hidden_sizes=(256,256),
+                 activation=nn.ReLU):
+        super().__init__()
+
+        obs_dim = observation_space.shape[0]
+        act_dim = action_space.shape[0]
+        act_limit = action_space.high[0]
+
+        # build policy and value functions
+        self.pi = MLPActor(obs_dim, act_dim, hidden_sizes, activation, act_limit)
+        self.q = MLPQFunction(obs_dim, act_dim, hidden_sizes, activation)
+
+    def act(self, obs):
+        with torch.no_grad():
+            action = self.pi(obs).numpy() 
+
+            # Random Noise inserted into Agents Action
+            action += noise * np.random.randn(act_dim)
+            return np.clip(action, -act_limit, act_limit)
+```
+
+Instead of learning at each step of the simulation, which would not enable us to act in a timely manner within our 
+simulation, the model makes use of a Replay Buffer. This buffer stores the relevant information such as the state 
+of the environment, action taken, reward, and subsequent state the agent finds itself in. Once the agent has enough 
+of these observations stored up, it then runs its update step, adjusting the parameters of our Actor-Critic Model 
+through backpropagation. For more information on this algorithm check out this link 
+
+```python
+
+class ReplayBuffer:
+    """
+    A simple FIFO experience replay buffer for DDPG agents.
+    """
+
+    def __init__(self, obs_dim, act_dim, size):
+        self.obs_buf = np.zeros(combined_shape(size, obs_dim), dtype=np.float32)
+        self.obs2_buf = np.zeros(combined_shape(size, obs_dim), dtype=np.float32)
+        self.act_buf = np.zeros(combined_shape(size, act_dim), dtype=np.float32)
+        self.rew_buf = np.zeros(size, dtype=np.float32)
+        self.done_buf = np.zeros(size, dtype=np.float32)
+        self.ptr, self.size, self.max_size = 0, 0, size
+
+    def store(self, obs, act, rew, next_obs, done):
+        self.obs_buf[self.ptr] = obs
+        self.obs2_buf[self.ptr] = next_obs
+        self.act_buf[self.ptr] = act
+        self.rew_buf[self.ptr] = rew
+        self.done_buf[self.ptr] = done
+        self.ptr = (self.ptr+1) % self.max_size
+        self.size = min(self.size+1, self.max_size)
+
+    def sample_batch(self, batch_size=32):
+        idxs = np.random.randint(0, self.size, size=batch_size)
+        batch = dict(obs=self.obs_buf[idxs],
+                     obs2=self.obs2_buf[idxs],
+                     act=self.act_buf[idxs],
+                     rew=self.rew_buf[idxs],
+                     done=self.done_buf[idxs])
+        return {k: torch.as_tensor(v, dtype=torch.float32) for k,v in batch.items()}
+```
+
+The implementation for the model and replay buffer can be found in the core.py file available in the code repository
+#### Running Experiments 
+The main experimentation code for my implementation lies in the run.py file.  It was designed to be run from the command
+line and has a number of different parameters available to tune experimentation such as batch size for our neural nets, 
+number of training epochs, naming of the experiment directory, etc. 
+
+```console
+!python run.py --exp_name Emotions --epochs 3000 --env 'BipedalWalker-v3' --batch_size 128
+```
+
+A number of other helper files are present in the lib folder and contain functions to support increased efficiency 
+in the update processes for our model, logging functionality of our formulated emotions, and video monitoring of our agent 
+as it learns.
+
+A typical interaction with our environment consists of choosing an action based on our observation of the state,
+stepping the environment forward, and storing information in our replay buffer as seen below.
+
+```python
+o, ep_ret, ep_len, r = env.reset(), 0, 0, 0
+
+a = get_action(o)
+
+# Next observation, reward, done?
+o2, r, d, _ = env.step(a)
+
+replay_buffer.store(o, a, r, o2, d)
+```
+
+
+For a detailed walkthrough of the code and examples on how to run the experiments check out my [implementation video](https://youtu.be/n5nuqHigvT0) and run your own experiments
+in the google Colab environment [Colab Notebook](https://colab.research.google.com/drive/1gCgDN338dJ9RNEUIW0nSg8B2nxEWRn4c?usp=sharing).
+
+### Results
+
+### Current State of the Art and Future Possibilities in RL
+- Multi-Agent RL
+- SuperHuman Game Play
+    - AlphaGo
+    - StarCraft
+    - Rubics Cube 
+
+- Data Center Energy Control
+
 
 ## Suggested Readings
 - **Spinning Up in Deep RL (Open AI)**
@@ -129,6 +263,9 @@ that the agent has access to include it's Speed, Position of Joints, Lidar Range
     - Neftci, E.O., Averbeck, B.B. Reinforcement learning in artificial and biological systems. Nat Mach Intell 1, 133–143 (2019).
     - https://www.nature.com/articles/s42256-019-0025-4?draft=marketing
     - Great intro linking state of the art research in both biology and computer science
+- **AlphaGo Documentary**
+    - Great Documentary about Deep Minds RL Agent that took on the worlds greatest professional Go Player
+    - Available for free on youtube [video](https://www.youtube.com/watch?v=WXuK6gekU1Y)
 - **Introduction to Reinforcement Learning**
     - Richard S. Sutton and Andrew G. Barto. 1998. Introduction to Reinforcement Learning (1st. ed.). MIT Press, Cambridge, MA, USA.
     - https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf  
