@@ -241,25 +241,25 @@ in the google Colab environment [Colab Notebook](https://colab.research.google.c
 
 ## Suggested Readings
 - **Spinning Up in Deep RL (Open AI)**
-    - https://spinningup.openai.com/en/latest/index.html
+    - [Website](https://spinningup.openai.com/en/latest/index.html)
     - -Best, code first, introduction to Deep Reinforcement Learning I was able to find, highly recommend
 - **Reinforcement Learning in artificial and biological systems**
     - Neftci, E.O., Averbeck, B.B. Reinforcement learning in artificial and biological systems. Nat Mach Intell 1, 133–143 (2019).
-    - https://www.nature.com/articles/s42256-019-0025-4?draft=marketing
+    - [Paper](https://www.nature.com/articles/s42256-019-0025-4?draft=marketing)
     - Great intro linking state of the art research in both biology and computer science
 - **AlphaGo Documentary**
     - Great Documentary about Deep Minds RL Agent that took on the worlds greatest professional Go Player
     - Available for free on youtube [video](https://www.youtube.com/watch?v=WXuK6gekU1Y)
 - **Introduction to Reinforcement Learning**
     - Richard S. Sutton and Andrew G. Barto. 1998. Introduction to Reinforcement Learning (1st. ed.). MIT Press, Cambridge, MA, USA.
-    - https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf  
+    - [Book Download (distributed freely)](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf)
     - Universally recognized as the most comprehensive introductory textbook on the subject of RL.
 **David Siver (Deep Mind) Intro to RL Course**
-    - https://www.davidsilver.uk/teaching/
+    - [Course Link](https://www.davidsilver.uk/teaching/)
     - One of the leaders of the RL team at DeepMind, famous for many breaking achievements such as defeating the World Champion at Go and Starcraft 
 
 - **OpenAI multi-agent hide and seek**
-    - https://openai.com/blog/emergent-tool-use/
+    - [Blog Post](https://openai.com/blog/emergent-tool-use/)
     - Breakthrough work in RL where agents learn to cooperate and develop highly creative strategies in order to beat another team of agents in Hide and Go Seek. Highly recommend checking this work out, amazing what they were able to accomplish.
 
 
