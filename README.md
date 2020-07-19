@@ -3,6 +3,8 @@
 #### [Implementation Walkthrough](https://youtu.be/n5nuqHigvT0)
 #### [Train you own Agent](https://colab.research.google.com/drive/1gCgDN338dJ9RNEUIW0nSg8B2nxEWRn4c?usp=sharing)
 
+Project completed for CSC594: Topics in Artificial Intelligence (Formulating Emotions in AI Agents)
+
 <a href="https://youtu.be/EJ3LfvFKxgs " target="_blank"><img src="https://img.youtube.com/vi/EJ3LfvFKxgs/0.jpg" 
 alt="Simulation Video" width="360" height="240" border="0" /></a>
 
